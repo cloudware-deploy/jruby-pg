@@ -86,7 +86,7 @@ $hoespec = Hoe.spec jruby? ? 'jruby-pg' : 'pg' do
 	self.rdoc_locations << "deveiate:/usr/local/www/public/code/#{remote_rdoc_dir}"
 
   self.spec_extras[:platform] = 'java' if jruby?
-  self.version = '0.1' if jruby?
+  self.version = '0.2' if jruby?
 end
 
 if jruby?

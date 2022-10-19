@@ -17,7 +17,7 @@ end
 module PG
 
 	# Library version
-	VERSION = RUBY_ENGINE == 'jruby' ? '0.1' : '0.17.1'
+	VERSION = RUBY_ENGINE == 'jruby' ? '0.2' : '0.17.1'
 
 	# VCS revision
 	REVISION = %q$Revision$
