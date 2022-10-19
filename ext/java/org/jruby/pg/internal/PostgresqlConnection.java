@@ -1560,6 +1560,7 @@ public class PostgresqlConnection implements ProtocolReader, ProtocolWriter {
       switch(msg.getType()) {
       case AuthenticationCleartextPassword:
       case AuthenticationMD5Password:
+      case AuthenticationSCRAM:
         // send password
         sendMessage(createAuthenticationMessage(msg));
         if(!flush()) {
@@ -1640,6 +1641,15 @@ public class PostgresqlConnection implements ProtocolReader, ProtocolWriter {
       } catch(Exception e) {
         // if I know what I'm doing then we shouldn't be here
         return null;
+      }
+    case AuthenticationSCRAM:
+      {
+        AuthenticationSCRAM auth = (AuthenticationSCRAM) msg;
+        if ( AuthenticationSCRAM.Step.Start == auth.getStep() ) {
+          return AuthenticationSCRAM.SALSClientFirstMessage(user, auth, props);
+        } else if ( AuthenticationSCRAM.Step.Continue == auth.getStep() ) {
+          return AuthenticationSCRAM.SALSClientFinalMessage(password, auth, props);
+        }
       }
     default:
       throw new IllegalArgumentException("Unsupported authentication type: " +

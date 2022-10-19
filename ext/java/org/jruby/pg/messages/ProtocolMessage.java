@@ -9,6 +9,7 @@ public abstract class ProtocolMessage {
     AuthenticationCryptPassword('R'),
     AuthenticationMD5Password('R'),
     AuthenticationSCMCredential('R'),
+    AuthenticationSCRAM('R'),
     BackendKeyData('K'),
     Bind('B'),
     BindComplete('2'),

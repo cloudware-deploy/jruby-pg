@@ -29,6 +29,12 @@ public class ProtocolMessageParser {
         return new AuthenticationMD5Password(md5Salt);
       case 6:
         return new AuthenticationSCMCredential();
+      case AuthenticationSCRAM.AUTH_REQ_SASL: /* 10 */
+        return AuthenticationSCRAM.SASLStart(reader.getString(), reader.getString());
+      case AuthenticationSCRAM.AUTH_REQ_SASL_CONTINUE: /* 11 */
+        return AuthenticationSCRAM.SASLContinue(new String(reader.getNChar(len - 4 - 4), java.nio.charset.StandardCharsets.UTF_8));
+      case AuthenticationSCRAM.AUTH_REQ_SASL_FINAL:  /* 12 */
+        return AuthenticationSCRAM.SASLFinal(new String(reader.getNChar(len - 4 - 4), java.nio.charset.StandardCharsets.UTF_8));
       default:
         throw new IllegalArgumentException("Unknown authentication type");
       }
